@@ -1,0 +1,130 @@
+﻿
+@model IEnumerable<MVC_Studnt_exam.Models.tblTopic>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/adminlayout.cshtml";
+}
+<style>
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007BFF;
+        color: #fff;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007BFF;
+        border: none;
+    }
+
+    .btn-update {
+        background-color: #ffc107;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    thead {
+        background-color: #007BFF;
+        color: #fff;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#btnsubmit").click(function () {
+            AddStudentData();
+        })
+    })
+    function AddStudentData() {
+        var n = $("#txtname").val();
+
+        var st = { "Topic_name": n };
+
+
+        $.ajax({
+            url: '/AdminArea/Topic/AddTopicData',
+            method: 'post',
+            data: JSON.stringify(st),
+            contentType: 'application/json',
+            success: function (resp) {
+                console.log(resp);
+                alert(resp);
+                window.location.href = "/AdminArea/Topic";
+            }
+        })
+        cleardata();
+
+    }
+    function cleardata() {
+        $("#txtname").val("");
+
+    }
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header" >
+                    <h4>Add Topic</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label>Topic Name</label>
+                        <input type="text" id="txtname" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <input type="button" value="Submit" id="btnsubmit" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Topic Name</th>
+                    </tr>
+                </thead>
+                <tbody id="tbldata">
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.Topic_name</td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

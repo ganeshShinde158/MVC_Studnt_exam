@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('../../images/background-register.jpg');
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+
+        h4 {
+            color: red;
+            margin-top: 15px;
+        }
+
+        .hero-image {
+           
+/*            background-image: url('../../images/background-1.jpg');
+*/            background-size: 100% 100%;
+            position: relative;
+            height: 200px; /* Adjust as needed */
+            text-align: center;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 style="font-size:50px">
+                <b style="font-size:88px">Exam Portal  </b>
+            </h1>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="w3-container">
+            <br><br><br><br>
+            <center>
+                <form action="@Url.Action("Index", "Admin", new { area = "AdminArea" })" method="get">
+                    <button type="submit" class="btn btn-danger">
+                        <h3><b>Admin Login</b></h3>
+                    </button>
+                </form>
+
+                <form action="@Url.Action("Index", "User", new { area = "StudentArea" })" method="get">
+                    <button type="submit" class="btn ripple-effect btn-danger">
+                        <h3><b>User Login</b></h3>
+                    </button>
+                </form>
+            </center>
+            <br><br><br><br>
+        </div>
+    </div>
+</body>
+</html>

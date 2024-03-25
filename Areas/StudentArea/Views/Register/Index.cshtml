@@ -1,0 +1,121 @@
+﻿@model MVC_Studnt_exam.Models.tblStudent_details
+
+@{
+
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#registrationForm').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var formData = $(this).serialize(); // Serialize form data
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddStudent", "Register")',
+                    data: formData,
+                    success: function (response) {
+                        alert(response); // Show the response message as an alert
+                        clearFormData(); // Clear the form fields on success
+                        window.location.href = "/StudentArea/User/Index"
+                    },
+                    error: function () {
+                        alert('Error occurred while registering.'); // Show an error alert if there's an issue
+                    }
+                });
+            });
+
+            // Function to clear form fields
+            function clearFormData() {
+                $('#registrationForm')[0].reset(); // Reset the form
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Registration</h2>
+        @using (Html.BeginForm("AddStudent", "Register", FormMethod.Post, new { id = "registrationForm" }))
+        {
+            <div class="form-group">
+                <label for="Student_name">Student Name</label>
+                @Html.TextBoxFor(model => model.Student_name, new { @class = "form-control", placeholder = "Enter Name" })
+            </div>
+            <div class="form-group">
+                <label for="Email_address">Email Address</label>
+                @Html.TextBoxFor(model => model.Email_address, new { @class = "form-control", placeholder = "Enter Email" })
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                @Html.PasswordFor(model => model.password, new { @class = "form-control", placeholder = "Enter Password" })
+            </div>
+            <div class="form-group">
+                <label for="Mobile_number">Mobile Number</label>
+                @Html.TextBoxFor(model => model.Mobile_number, new { @class = "form-control", placeholder = "Enter Mobile Number" })
+            </div>
+            <div class="form-group">
+                <label for="Qualification">Qualification</label>
+                @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control", placeholder = "Enter Qualification" })
+            </div>
+
+            <button type="submit">Register</button>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- Add your custom styles here -->
+    <style>
+        body {
+            background-image: url('../../../../images/login-background.jpg');
+            background-size: 100% 100%;
+            background-position: center center; /* Adjust as needed */
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* This ensures that the background image stays fixed as the user scrolls */
+            margin: 0; /* Remove default body margin */
+            padding: 0; /* Remove default body padding */
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            /* Add your styles for form controls */
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            /* Add your styles for the primary button */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            /* Add your styles for the danger button */
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h4 {
+            color: red;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+            <div class="text-center">
+                <h2 style="color: white;">Student Login</h2>
+            </div>
+            <div class="mb-3">
+                <label for="email_address" style="color: white;">Email Address</label>
+                @Html.TextBox("email_address", null, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label for="password" style="color: white;">Password</label>
+                @Html.TextBox("password", null, new { @class = "form-control" })
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Login" class="btn btn-primary" />
+                <input type="reset" value="Reset" class="btn btn-danger" />
+                <a href="/StudentArea/Register/Index" class="btn btn-success">Register</a>
+                <h4>@ViewBag.msg</h4>
+            </div>
+        }
+    </div>
+</body>
+</html>

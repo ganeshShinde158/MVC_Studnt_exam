@@ -1,0 +1,181 @@
+﻿ @model IEnumerable<MVC_Studnt_exam.Models.tblTopic_contents>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AdminArea/Views/Shared/adminlayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007BFF;
+            border: none;
+        }
+
+        .btn-update {
+            background-color: #ffc107;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <h2>Add TopicContent</h2>
+    <script>
+        var content = [];
+        $(document).ready(function () {
+            FetchTopic();
+            $("#btnadd").click(function () {
+                Filltable();
+            })
+            $("#btnsubmit").click(function () {
+                AddData();
+            })
+        })
+        function Filltable() {
+            var cname = $("#txtname").val();
+            var t = { "Content_name": cname };
+            content.push(t);
+            Display();
+        }
+        function Display() {
+            $("#tbldata").empty();
+            $.each(content, function (i, d) {
+                $("#tbldata").append("<tr><td>" + (i + 1) + "</td><td>" + d.Content_name + "</td></tr>");
+            })
+        }
+        function AddData() {
+            var ts = $("#txtname").val();
+            var t = $("#ddtopic").val();
+
+            var st = { "Content_name": ts, "Topic_id": t };
+
+            $.ajax({
+                url: '/AdminArea/Contents/AddContentData',
+                method: 'post',
+                data: JSON.stringify(st),
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert(resp);
+                    console.log(resp);
+                }
+            })
+
+        }
+        function FetchTopic() {
+            $.ajax({
+                url: '/AdminArea/Topic/GetTopic',
+                method: 'get',
+                contentType: 'application/json',
+                success: function (resp) {
+                    console.log(resp);
+                    $.each(resp, function (i, d) {
+                        $("#ddtopic").append("<option value=" + d.Topic_id + ">" + d.Topic_name + "</option>")
+                    })
+
+                }
+
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Content Details</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label for="txtname">Content Name</label>
+                            <input type="text" id="txtname" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ddtopic">Topic Name</label>
+                                <select id="ddtopic" class="form-control">
+                                    <option selected disabled>Select topic</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" id="btnsubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Content Name</th>
+                            <th>Topic Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Content_name</td>
+                                <td>@item.tblTopic.Topic_name</td>
+
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
